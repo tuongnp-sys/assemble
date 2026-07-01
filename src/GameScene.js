@@ -18,6 +18,7 @@ import { shouldPauseTimerDuringButHelp } from './core/butHelpService.js';
 import { debugFlags } from './core/debugFlags.js';
 import { t, tFmt } from './core/i18n.js';
 import { wireSceneLang } from './ui/LangToggle.js';
+import { computeGameLayout } from './ui/gameLayout.js';
 
 /**
  * GameScene — campaign: Collect → Assemble → Ritual.
@@ -49,21 +50,24 @@ export class GameScene extends Phaser.Scene {
 
     this.controller = new GameController(this.actId, this.dailySeed);
     const cfg = this.controller.state.actConfig;
-    const laneY = cfg.collect.laneY ?? 220;
+    const layout = computeGameLayout(w, h);
 
     this.hud = new GameHudView(this, w);
-    this.collectLane = new CollectLaneView(this, w, laneY);
+    this.collectLane = new CollectLaneView(this, w, layout.collectLaneY);
     this.columnView = new AssembleColumnView(
       this,
-      cfg.assemble,
+      { ...cfg.assemble, ...layout },
       () => this._onBottomUndo(),
       () => this._showToast(t('game.undo_only_bottom'))
     );
-    this.poolView = new SegmentPoolView(this, cfg.assemble, (id) => this._onPoolSelect(id));
+    this.poolView = new SegmentPoolView(this, { ...cfg.assemble, ...layout }, (id) =>
+      this._onPoolSelect(id)
+    );
     this.ritualBtn = new RitualButtonView(this, w, h, {
       onDown: () => this._onRitualDown(),
       onUp: () => this._onRitualUp(),
     });
+    this.ritualBtn.applyLayout(layout);
 
     this.toastText = this.add
       .text(w / 2, h * 0.5, '', {
@@ -96,6 +100,10 @@ export class GameScene extends Phaser.Scene {
     this.input.on('pointerdown', (ptr) => this._onPointerDown(ptr));
 
     wireSceneLang(this, () => this._refreshLang());
+
+    this._layoutResizeHandler = () => this._applyLayout();
+    this.scale.on('resize', this._layoutResizeHandler);
+    this.controller.setCollectLaneY(layout.collectLaneY);
 
     this.events.once('shutdown', () => this._cleanup());
 
@@ -151,6 +159,10 @@ export class GameScene extends Phaser.Scene {
   }
 
   _cleanup() {
+    if (this._layoutResizeHandler) {
+      this.scale.off('resize', this._layoutResizeHandler);
+      this._layoutResizeHandler = null;
+    }
     this.briefing?.destroy();
     this.chrome?.destroy();
     this.hud?.destroy();
@@ -337,6 +349,25 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
+  _applyLayout() {
+    const w = this.cameras.main.width;
+    const h = this.cameras.main.height;
+    const layout = computeGameLayout(w, h);
+    this._layout = layout;
+    this.controller?.setCollectLaneY(layout.collectLaneY);
+    this.columnView?.applyLayout(layout);
+    this.poolView?.applyLayout(layout);
+    this.ritualBtn?.applyLayout(layout);
+    this.collectLane?.applyLayout(w, layout);
+
+    const state = this.controller?.state;
+    if (!state) return;
+    if (state.phase === 'ASSEMBLE' || state.phase === 'RITUAL') {
+      this.columnView.sync(state);
+      this.poolView.sync(state, this.selectedId);
+    }
+  }
+
   _syncAssembleViews() {
     const state = this.controller.state;
     this.columnView.sync(state);
@@ -497,12 +528,14 @@ export class GameScene extends Phaser.Scene {
     if (state.phase === 'COLLECT') {
       this.collectLane.sync(this.controller.collect);
       this.poolView.setAssembleUiVisible(false);
+      this.columnView.setAssembleUiVisible(false);
       this.chrome.updateButHelp(0, false);
     } else {
       this.collectLane.sync({ drifting: [] });
     }
 
     if (state.phase === 'ASSEMBLE' || state.phase === 'RITUAL') {
+      this.columnView.setAssembleUiVisible(true);
       this.selectedId = this.controller.assemble.selectedId;
       this.columnView.sync(state);
       this.poolView.sync(state, this.selectedId);

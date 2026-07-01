@@ -94,6 +94,49 @@ export class AssembleColumnView {
     this.undoHintTween = null;
     this._lastBuried = 0;
     this._hasColumn = false;
+    this.labelX = labelX;
+    this._assembleUiVisible = false;
+    this.setAssembleUiVisible(false);
+  }
+
+  /**
+   * @param {{ columnX: number, viewportTopY: number, viewportBottomY: number }} layout
+   */
+  applyLayout(layout) {
+    this.columnX = layout.columnX;
+    this.labelX = this.columnX + 58;
+    this.viewportTopY = layout.viewportTopY;
+    this.viewportBottomY = layout.viewportBottomY;
+
+    const vpH = this.viewportBottomY - this.viewportTopY;
+    this.segmentStep = Math.min(
+      this.segmentHeight + SEGMENT_GAP,
+      Math.floor(vpH / Math.max(this.maxVisible, 1))
+    );
+    this.dropY = this.viewportBottomY - 18;
+
+    this.columnBg.setPosition(this.columnX, (this.viewportTopY + this.viewportBottomY) / 2);
+    this.columnBg.setSize(84, vpH + 8);
+
+    this.stumpGfx.setPosition(this.columnX, this.viewportBottomY + 6);
+    this.buriedText.setPosition(this.labelX, this.viewportBottomY + 4);
+    this.columnTitle.setPosition(this.columnX, this.viewportTopY + 10);
+    this.dropZone.setPosition(this.columnX, this.dropY);
+    this.dropHint.setPosition(this.labelX, this.dropY);
+  }
+
+  /** @param {boolean} visible */
+  setAssembleUiVisible(visible) {
+    this._assembleUiVisible = visible;
+    this.columnBg.setVisible(visible);
+    this.columnTitle.setVisible(visible);
+    this.dropZone.setVisible(visible);
+    this.dropHint.setVisible(visible);
+    if (!visible) {
+      this.stumpGfx.setVisible(false);
+      this.buriedText.setVisible(false);
+      for (const s of this.placed) s.setVisible(false);
+    }
   }
 
   refreshLang() {
@@ -120,6 +163,8 @@ export class AssembleColumnView {
    * @param {import('../core/GameState.js').GameState} state
    */
   sync(state) {
+    if (!this._assembleUiVisible) return;
+
     const total = state.column.length;
     const start = Math.max(0, total - this.maxVisible);
     const visibleCount = total - start;

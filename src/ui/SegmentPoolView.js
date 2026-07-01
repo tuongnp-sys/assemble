@@ -13,6 +13,7 @@ export class SegmentPoolView {
   constructor(scene, assembleConfig, onSelect) {
     this.scene = scene;
     this.poolY = assembleConfig.poolY ?? 680;
+    this.poolH = assembleConfig.poolH ?? 92;
     this.onSelect = onSelect;
     this.depth = 12;
     this.selectedId = null;
@@ -21,13 +22,13 @@ export class SegmentPoolView {
 
     const w = scene.cameras.main.width;
     this.poolBg = scene.add
-      .rectangle(w / 2, this.poolY, w - 24, 100, 0x263238, 0.75)
+      .rectangle(w / 2, this.poolY, w - 24, this.poolH, 0x263238, 0.75)
       .setStrokeStyle(1, 0x546e7a, 0.8)
       .setDepth(11)
       .setVisible(false);
 
     this.hintText = scene.add
-      .text(w / 2, this.poolY - 58, t('game.pool_hint'), {
+      .text(w / 2, this.poolY - this.poolH / 2 - 22, t('game.pool_hint'), {
         fontFamily: 'system-ui, sans-serif',
         fontSize: '11px',
         color: '#b0bec5',
@@ -39,6 +40,18 @@ export class SegmentPoolView {
     /** @type {Map<string, Phaser.GameObjects.Container>} */
     this.sprites = new Map();
     this.dragGhost = null;
+  }
+
+  /**
+   * @param {{ poolY: number, poolH: number }} layout
+   */
+  applyLayout(layout) {
+    this.poolY = layout.poolY;
+    this.poolH = layout.poolH;
+    const w = this.scene.cameras.main.width;
+    this.poolBg.setPosition(w / 2, this.poolY);
+    this.poolBg.setSize(w - 24, this.poolH);
+    this.hintText.setPosition(w / 2, this.poolY - this.poolH / 2 - 22);
   }
 
   /** @param {boolean} visible */

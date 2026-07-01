@@ -45,7 +45,7 @@ export function initGame() {
     parent: 'game-container',
     backgroundColor: '#1a3d2e',
     scale: {
-      mode: Phaser.Scale.EXPAND,
+      mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH,
       autoRound: true,
     },

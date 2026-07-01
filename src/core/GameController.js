@@ -69,6 +69,11 @@ export class GameController {
     this.butHelpFrozen = v;
   }
 
+  /** @param {number} laneY */
+  setCollectLaneY(laneY) {
+    this.collect.config.laneY = laneY;
+  }
+
   /**
    * Gọi Bụt — chỉ bài lóng đúng (không tự ghép).
    */

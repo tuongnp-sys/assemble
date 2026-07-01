@@ -53,6 +53,21 @@ export class RitualButtonView {
 
     this._bindHold(this.bg);
     this._bindHold(this.label);
+    this.ritualY = h - 100;
+    this.ritualHintY = h - 138;
+  }
+
+  /**
+   * @param {{ ritualY: number, ritualHintY: number }} layout
+   */
+  applyLayout(layout) {
+    const w = this.scene.cameras.main.width;
+    this.ritualY = layout.ritualY;
+    this.ritualHintY = layout.ritualHintY;
+    this.bg.setPosition(w / 2, this.ritualY);
+    this.label.setPosition(w / 2, this.ritualY);
+    this.hint.setPosition(w / 2, this.ritualHintY);
+    this.ring.setPosition(w / 2, this.ritualY);
   }
 
   /**

@@ -15,7 +15,7 @@ export class CollectLaneView {
     this.laneY = laneY;
     this.depth = 9;
 
-    scene.add
+    this.laneBg = scene.add
       .rectangle(w / 2, laneY, w - 32, 56, 0x2e5a3a, 0.45)
       .setStrokeStyle(1, 0x4caf50, 0.5)
       .setDepth(8);
@@ -31,6 +31,17 @@ export class CollectLaneView {
 
     /** @type {Map<string, Phaser.GameObjects.Container>} */
     this.sprites = new Map();
+  }
+
+  /**
+   * @param {number} w
+   * @param {{ collectLaneY: number }} layout
+   */
+  applyLayout(w, layout) {
+    this.laneY = layout.collectLaneY;
+    this.laneBg.setPosition(w / 2, this.laneY);
+    this.laneBg.setSize(w - 32, 56);
+    this.hintText.setPosition(w / 2, this.laneY - 42);
   }
 
   /**
@@ -64,6 +75,7 @@ export class CollectLaneView {
 
   destroy() {
     this.hintText?.destroy();
+    this.laneBg?.destroy();
     for (const spr of this.sprites.values()) spr.destroy();
     this.sprites.clear();
   }

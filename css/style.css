@@ -66,16 +66,17 @@ body {
   touch-action: manipulation;
 }
 
-/* Cùng hàng MENU Phaser (10, 10) — không chồng Gọi Bụt / đồng hồ */
+/* Giữa trên — không chồng Thoát (trái) / mute (phải) */
 .global-chrome-lang {
   position: absolute;
-  left: 19.2%;
+  left: 50%;
   top: 1.23%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 2px;
-  padding: 5px 6px;
-  border-radius: 6px;
+  gap: 1px;
+  padding: 3px 5px;
+  border-radius: 4px;
   border: 1px solid rgba(129, 199, 132, 0.9);
   background: rgba(27, 61, 27, 0.92);
 }
@@ -83,10 +84,10 @@ body {
 .global-chrome-lang-btn {
   border: none;
   background: transparent;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   cursor: pointer;
-  padding: 2px 4px;
+  padding: 1px 3px;
   color: #78909c;
 }
 
@@ -100,24 +101,36 @@ body {
 
 .global-chrome-lang-sep {
   color: #78909c;
-  font-size: 10px;
+  font-size: 9px;
   user-select: none;
+}
+
+@media (max-width: 600px) {
+  .global-chrome-lang {
+    transform: translateX(calc(-50% + 14px));
+  }
 }
 
 .global-chrome-mute {
   position: absolute;
-  right: 12px;
-  top: 8px;
+  right: 3.2%;
+  top: max(10px, 2.5%);
   z-index: 2;
-  min-width: 48px;
-  height: 36px;
-  padding: 0 10px;
-  border-radius: 6px;
+  width: 7.5%;
+  height: 3.45%;
+  min-width: unset;
+  max-width: 32px;
+  max-height: 28px;
+  padding: 0;
+  border-radius: 4px;
   border: 1px solid rgba(129, 199, 132, 0.9);
   background: rgba(27, 61, 27, 0.92);
-  font-size: 16px;
+  font-size: 12px;
   line-height: 1;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* LoginScreen — card HTML (chrome: GlobalHtmlChrome) */
