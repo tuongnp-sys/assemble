@@ -62,13 +62,13 @@ export class AssembleColumnView {
       .setVisible(false);
 
     this.columnTitle = scene.add
-      .text(labelX, this.viewportTopY - 14, t('game.column_title'), {
+      .text(this.columnX, this.viewportTopY + 10, t('game.column_title'), {
         fontFamily: 'system-ui, sans-serif',
         fontSize: '10px',
         color: '#81c784',
       })
-      .setOrigin(0, 0.5)
-      .setDepth(this.depth);
+      .setOrigin(0.5, 0)
+      .setDepth(16);
 
     this.dropZone = scene.add
       .rectangle(this.columnX, this.dropY, 72, 34, 0x4caf50, 0.14)

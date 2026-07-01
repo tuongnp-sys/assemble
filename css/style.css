@@ -66,15 +66,15 @@ body {
   touch-action: manipulation;
 }
 
-/* Góc trái (52, 48) — khớp LangToggle canvas cũ, không chồng đồng hồ giữa */
+/* Cùng hàng MENU Phaser (10, 10) — không chồng Gọi Bụt / đồng hồ */
 .global-chrome-lang {
   position: absolute;
-  left: 52px;
-  top: 40px;
+  left: 19.2%;
+  top: 1.23%;
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px 10px;
+  gap: 2px;
+  padding: 5px 6px;
   border-radius: 6px;
   border: 1px solid rgba(129, 199, 132, 0.9);
   background: rgba(27, 61, 27, 0.92);

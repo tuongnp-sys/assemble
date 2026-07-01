@@ -46,16 +46,16 @@ export class GameChromeView {
       .setVisible(false)
       .setInteractive({ useHandCursor: true });
 
-    /** Dưới nút mute HTML (góc phải) — tránh chồng 🔊 */
+    /** Trái, dưới Gọi Bụt — không chồng mute HTML góc phải */
     this.pauseBtn = scene.add
-      .text(w - 10, 48, '⏸', {
+      .text(10, 70, '⏸', {
         fontFamily: 'system-ui, sans-serif',
         fontSize: '16px',
         color: '#fff9c4',
         backgroundColor: '#1b3d1bcc',
         padding: { x: 8, y: 3 },
       })
-      .setOrigin(1, 0)
+      .setOrigin(0, 0)
       .setDepth(DEPTH)
       .setInteractive({ useHandCursor: true });
 

@@ -58,7 +58,7 @@ export class FinaleCinematicScene extends Phaser.Scene {
 
     this.add.rectangle(w / 2, h / 2, w, h, 0x0a1628, 0.92).setDepth(0);
 
-    this.add
+    this.castleImg = this.add
       .image(w / 2, h * 0.18, 'game_assets', 'castle_mid')
       .setAlpha(0.5)
       .setScale(1.1)
@@ -123,20 +123,59 @@ export class FinaleCinematicScene extends Phaser.Scene {
     this.richSprites = [];
     /** @type {{ phu: Phaser.GameObjects.Container|null, rich: Phaser.GameObjects.Container|null }} */
     this._speechBySpeaker = { phu: null, rich: null };
+    /** @type {{ phu: { x: number, y: number, textKey: string, opts: object }|null, rich: { x: number, y: number, textKey: string, opts: object }|null }} */
+    this._speechBubbleMeta = { phu: null, rich: null };
+    this._titleKey = 'finale.success';
+    this._quoteKey = 'finale.quote_connect';
+    this._actionLabelKey = 'finale.connect_btn';
     this.w = w;
     this.h = h;
 
     this._buildActBundles(w, h);
     this._buildActionButton(w, h);
 
-    wireSceneLang(this, () =>
-      this.scene.restart({
-        dailySeed: this.dailySeed,
-        gameOverPayload: this.gameOverPayload,
-      })
-    );
+    wireSceneLang(this, () => this._refreshLang());
 
     audioManager.playSfx('khacnhap');
+  }
+
+  /** Đổi VN/EN — chỉ cập nhật chữ, giữ bước cinematic hiện tại. */
+  _refreshLang() {
+    if (this.titleText?.active) {
+      this.titleText.setText(t(this._titleKey));
+    }
+
+    if (this.quoteText?.active && this.quoteText.alpha > 0 && this._quoteKey) {
+      this.quoteText.setText(t(this._quoteKey));
+    }
+
+    for (const bundle of this.actBundles ?? []) {
+      bundle.sub?.setText(t('common.segments'));
+    }
+
+    if (this.actionLabel?.active && this.actionLabel.visible && this._actionLabelKey) {
+      this.actionLabel.setText(t(this._actionLabelKey));
+    }
+
+    for (const speaker of /** @type {const} */ (['phu', 'rich'])) {
+      const meta = this._speechBubbleMeta[speaker];
+      const container = this._speechBySpeaker[speaker];
+      if (!meta || !container) continue;
+      const label = container.list.find((c) => typeof c.setText === 'function');
+      label?.setText(t(meta.textKey));
+    }
+
+    if (this.weddingStarted && this.achievementText?.alpha > 0) {
+      const ach = getAchievementText('tre_master');
+      const achLine = this._achievementNew
+        ? tFmt('finale.ach_new', { icon: ach.icon, title: ach.title, desc: ach.desc })
+        : tFmt('finale.ach_have', { icon: ach.icon, title: ach.title });
+      this.achievementText.setText(achLine);
+    }
+
+    if (this.exitLabel?.active && this.exitLabel.alpha > 0) {
+      this.exitLabel.setText(t('finale.exit_btn'));
+    }
   }
 
   /**
@@ -269,6 +308,7 @@ export class FinaleCinematicScene extends Phaser.Scene {
    * @param {() => void} onClick
    */
   _setActionButton(labelKey, fillColor, strokeColor, onClick) {
+    this._actionLabelKey = labelKey;
     this._actionHandler = onClick;
     this.actionBg.setFillStyle(fillColor, 1);
     this.actionBg.setStrokeStyle(2, strokeColor);
@@ -304,8 +344,10 @@ export class FinaleCinematicScene extends Phaser.Scene {
 
     this._disableActionButton();
     this.actionBg.setAlpha(0.4);
+    this._actionLabelKey = 'finale.connecting';
     this.actionLabel.setText(t('finale.connecting'));
 
+    this._quoteKey = 'finale.carve';
     this.quoteText.setText(t('finale.carve'));
 
     for (const bundle of this.actBundles) {
@@ -373,6 +415,12 @@ export class FinaleCinematicScene extends Phaser.Scene {
       displayHeight: targetH,
       duration: 2400,
       ease: 'Cubic.easeOut',
+      onUpdate: () => {
+        this._updateBambooNodes(this.treePillar.displayHeight);
+      },
+      onComplete: () => {
+        this._updateBambooNodes(targetH);
+      },
     });
 
     this.tweens.add({
@@ -422,6 +470,45 @@ export class FinaleCinematicScene extends Phaser.Scene {
     return this.mergeZoneY + 60 - h;
   }
 
+  _houseBottomY() {
+    if (!this.castleImg) return this.h * 0.24;
+    return this.castleImg.y + this.castleImg.displayHeight * 0.5;
+  }
+
+  /** Dòng chúc mừng — dưới ngôi nhà, chữ to hơn quote mặc định. */
+  _positionWeddingQuote() {
+    this.quoteText.setY(this._houseBottomY() + 16);
+    this.quoteText.setFontSize(15);
+    this.quoteText.setColor('#e8f5e9');
+    this.quoteText.setStyle({ fontStyle: 'bold' });
+  }
+
+  /**
+   * Vẽ mắt tre (vòng ngang) dọc thân — cập nhật theo chiều cao pillar đang grow.
+   * @param {number} displayHeight
+   */
+  _updateBambooNodes(displayHeight) {
+    if (!this.treeNodeGfx) {
+      this.treeNodeGfx = this.add.graphics().setDepth(10);
+    }
+    const bottomY = this.mergeZoneY + 60;
+    const cx = this.columnX;
+    const gfx = this.treeNodeGfx;
+    gfx.clear();
+    if (displayHeight < 14) return;
+
+    const halfW = 19;
+    const step = 17;
+    const topY = bottomY - displayHeight;
+
+    for (let y = bottomY - 6; y > topY + 4; y -= step) {
+      gfx.fillStyle(0x1b5e20, 0.92);
+      gfx.fillRect(cx - halfW, y, halfW * 2, 3);
+      gfx.fillStyle(0x7bc45a, 0.35);
+      gfx.fillRect(cx - halfW + 2, y - 1, halfW * 2 - 4, 1);
+    }
+  }
+
   _onHundredComplete() {
     const w = this.w;
     const h = this.h;
@@ -430,12 +517,14 @@ export class FinaleCinematicScene extends Phaser.Scene {
     audioManager.playSfx('khacnhap');
 
     this.titleText.setText(t('finale.hundred'));
+    this._titleKey = 'finale.hundred';
     this.titleText.setY(h * 0.1);
     this.counterText.setY(h * 0.16);
     this.counterText.setFontSize(22);
     this.quoteText.setY(h * 0.21);
 
     if (this.treePillar) this.treePillar.setAlpha(0.85);
+    if (this.treeNodeGfx) this.treeNodeGfx.setAlpha(0.85);
     if (this.glow) this.glow.setAlpha(0.3);
 
     this.actionBg.setVisible(true);
@@ -451,6 +540,7 @@ export class FinaleCinematicScene extends Phaser.Scene {
     const depth = 18;
 
     this.quoteText.setAlpha(0);
+    this._quoteKey = null;
     bgmBus.requestTrack('finale_confront');
 
     this.groundY = groundY;
@@ -494,6 +584,7 @@ export class FinaleCinematicScene extends Phaser.Scene {
       b.destroy();
       this._speechBySpeaker[speaker] = null;
     }
+    this._speechBubbleMeta[speaker] = null;
   }
 
   _hideAllSpeechBubbles() {
@@ -542,6 +633,7 @@ export class FinaleCinematicScene extends Phaser.Scene {
     const clampedX = Phaser.Math.Clamp(x, bw / 2 + 10, this.w - bw / 2 - 10);
     container.setPosition(clampedX, y);
     this._speechBySpeaker[speaker] = container;
+    this._speechBubbleMeta[speaker] = { x: clampedX, y, textKey, opts: { ...opts } };
 
     container.setScale(0.82).setAlpha(0);
     this.tweens.add({
@@ -767,10 +859,12 @@ export class FinaleCinematicScene extends Phaser.Scene {
     this._achievementNew = isNew;
 
     this.quoteText.setAlpha(1);
+    this._quoteKey = 'finale.wedding';
     this.quoteText.setText(t('finale.wedding'));
-    this.quoteText.setY(h * 0.17);
+    this._positionWeddingQuote();
 
     if (this.treePillar) this.treePillar.setAlpha(0.35);
+    if (this.treeNodeGfx) this.treeNodeGfx.setAlpha(0.35);
     if (this.glow) this.glow.setAlpha(0.2);
 
     this.butImg = this.add
