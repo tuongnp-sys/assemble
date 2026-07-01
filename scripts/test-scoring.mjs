@@ -38,6 +38,7 @@ const act1Perfect = makeState('1', {
   wrongDecoyTaps: 0,
   saboteurEvents: 0,
   victory: true,
+  butGhepUsed: false,
 });
 const b1 = computeScoreBreakdown(act1Perfect, true);
 assert(b1.base === 10000, 'act1 base 10k');
@@ -66,6 +67,23 @@ assert(bf.total > b1.total, 'finale beats act1 perfect');
 
 const defeat = makeState('1', { timeLeft: 50, victory: false });
 assert(computeActScore(defeat, false) === 0, 'defeat score is 0');
+
+const act2Ghep = makeState('2', {
+  timeLeft: 90,
+  wrongDecoyTaps: 0,
+  victory: true,
+  butGhepUsed: true,
+});
+const act2Normal = makeState('2', {
+  timeLeft: 90,
+  wrongDecoyTaps: 0,
+  victory: true,
+  butGhepUsed: false,
+});
+const b2g = computeScoreBreakdown(act2Ghep, true);
+const b2n = computeScoreBreakdown(act2Normal, true);
+assert(b2g.butGhepPenalty > 0, 'but ghep penalty applied');
+assert(b2g.total === Math.max(100, b2n.total - b2g.butGhepPenalty), 'ghep halves score');
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed > 0 ? 1 : 0);

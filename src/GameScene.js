@@ -14,7 +14,9 @@ import { ActBriefingView } from './ui/ActBriefingView.js';
 import { GameChromeView } from './ui/GameChromeView.js';
 import { CampaignBackdropView } from './ui/CampaignBackdropView.js';
 import { ButHelpOverlay } from './ui/ButHelpOverlay.js';
+import { ButCallChoiceOverlay } from './ui/ButCallChoiceOverlay.js';
 import { shouldPauseTimerDuringButHelp } from './core/butHelpService.js';
+import { getButGhepOverlaySec } from './core/butGhepService.js';
 import { debugFlags } from './core/debugFlags.js';
 import { t, tFmt } from './core/i18n.js';
 import { wireSceneLang } from './ui/LangToggle.js';
@@ -89,6 +91,7 @@ export class GameScene extends Phaser.Scene {
     this._lastUiTap = 0;
 
     this.butOverlay = new ButHelpOverlay(this);
+    this.butChoice = new ButCallChoiceOverlay(this);
 
     this.chrome = new GameChromeView(this, {
       onMenu: () => this._requestMenu(),
@@ -289,16 +292,49 @@ export class GameScene extends Phaser.Scene {
   _updateButHelpButton() {
     const state = this.controller.state;
     const show = state.phase === 'ASSEMBLE' && !this.briefingActive && !this.ended;
-    this.chrome.updateButHelp(state.butHelpUsesLeft, show);
+    this.chrome.updateButHelp(state.butHelpUsesLeft, state.butGhepUsesLeft, show);
   }
 
   _onButHelp() {
-    if (this.briefingActive || this.ended || this.butHelpActive || this.controller.paused) return;
-    if (this.chrome.isOverlayOpen()) return;
+    if (this.briefingActive || this.ended || this.butHelpActive || this.butChoice?.isActive() || this.controller.paused) return;
+    if (this.chrome.isOverlayOpen() || this.butChoice.isActive()) return;
 
+    const opts = this.controller.getButCallOptions();
+    if (!opts.hint && !opts.ghep) {
+      this._showToast(t('toast.but_no_uses'));
+      return;
+    }
+
+    if (opts.hint && !opts.ghep) {
+      this._runButHint();
+      return;
+    }
+    if (opts.ghep && !opts.hint) {
+      this._runButGhep();
+      return;
+    }
+
+    this.butChoice.show({
+      hint: opts.hint,
+      ghep: opts.ghep,
+      onHint: () => this._runButHint(),
+      onGhep: () => this._runButGhep(),
+    });
+  }
+
+  _runButHint() {
     const res = this.controller.handleButHelp();
     if (!res.events.length) {
       if (res.reason === 'no_uses') this._showToast(t('toast.but_no_uses'));
+      return;
+    }
+    this._handleEvents(res.events);
+  }
+
+  _runButGhep() {
+    const res = this.controller.handleButGhep();
+    if (!res.events.length) {
+      if (res.reason === 'no_ghep') this._showToast(t('toast.but_no_uses'));
       return;
     }
     this._handleEvents(res.events);
@@ -330,6 +366,41 @@ export class GameScene extends Phaser.Scene {
         this.butHelpActive = false;
         this.controller.setButHelpFrozen(false);
         this._updateButHelpButton();
+      },
+    });
+    this._updateButHelpButton();
+  }
+
+  _startButGhep(ev) {
+    this.butHelpActive = true;
+    if (shouldPauseTimerDuringButHelp()) {
+      this.controller.setButHelpFrozen(true);
+    }
+
+    this.poolView.clearHint();
+    this.columnView.clearUndoHint();
+    this._syncAssembleViews();
+
+    const st = this.controller.state;
+    this.backdrop?.setColumnProgress(st.column.length / st.actConfig.assembleTarget);
+    this.backdrop?.onButHelp();
+    audioManager.playSfx('snap');
+    this.cameras.main.flash(280, 255, 235, 140);
+
+    this.butOverlay.show({
+      message: /** @type {string} */ (ev.message),
+      kind: 'ghep',
+      durationSec: getButGhepOverlaySec(),
+      onDone: () => {
+        this.butHelpActive = false;
+        this.controller.setButHelpFrozen(false);
+        this._updateButHelpButton();
+        this._showToast(
+          tFmt('toast.but_ghep_done', {
+            n: /** @type {number} */ (ev.placedCount ?? 0),
+            left: /** @type {number} */ (ev.manualLeft ?? 0),
+          })
+        );
       },
     });
     this._updateButHelpButton();
@@ -443,9 +514,10 @@ export class GameScene extends Phaser.Scene {
       }
       if (ev.type === 'phase' && ev.phase === 'RITUAL') {
         this.ritualBtn.setVisible(true);
-        this.chrome.updateButHelp(0, false);
+        this.chrome.updateButHelp(0, 0, false);
       }
       if (ev.type === 'but_help') this._startButHelp(ev);
+      if (ev.type === 'but_ghep') this._startButGhep(ev);
       if (ev.type === 'saboteur_drop' || ev.type === 'saboteur_decoy' || ev.type === 'saboteur_hud') {
         const key = ev.messageKey ?? 'saboteur.drop';
         this._showToast(t(/** @type {string} */ (key)));
@@ -529,7 +601,7 @@ export class GameScene extends Phaser.Scene {
       this.collectLane.sync(this.controller.collect);
       this.poolView.setAssembleUiVisible(false);
       this.columnView.setAssembleUiVisible(false);
-      this.chrome.updateButHelp(0, false);
+      this.chrome.updateButHelp(0, 0, false);
     } else {
       this.collectLane.sync({ drifting: [] });
     }

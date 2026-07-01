@@ -9,6 +9,7 @@ import { t, tFmt } from './i18n.js';
  *   timeBonus: number,
  *   decoyPenalty: number,
  *   saboteurBonus: number,
+ *   butGhepPenalty: number,
  *   actWeight: number,
  * }} ScoreBreakdown */
 
@@ -44,6 +45,7 @@ export function computeScoreBreakdown(state, victory = state.victory) {
       timeBonus: 0,
       decoyPenalty: 0,
       saboteurBonus: 0,
+      butGhepPenalty: 0,
       actWeight,
     };
   }
@@ -62,10 +64,14 @@ export function computeScoreBreakdown(state, victory = state.victory) {
     );
   }
 
-  const total = Math.max(
-    minScore,
-    base + timeBonus - decoyPenalty + saboteurBonus
-  );
+  const raw = base + timeBonus - decoyPenalty + saboteurBonus;
+  let butGhepPenalty = 0;
+  if (state.butGhepUsed) {
+    const mult = balance.butGhep?.scoreMultiplier ?? 0.5;
+    butGhepPenalty = Math.floor(raw * (1 - mult));
+  }
+
+  const total = Math.max(minScore, raw - butGhepPenalty);
 
   return {
     total,
@@ -73,6 +79,7 @@ export function computeScoreBreakdown(state, victory = state.victory) {
     timeBonus,
     decoyPenalty,
     saboteurBonus,
+    butGhepPenalty,
     actWeight,
   };
 }
@@ -108,6 +115,9 @@ export function formatScoreBreakdown(b) {
   }
   if (b.saboteurBonus > 0) {
     parts.push(tFmt('gameover.score_saboteur', { n: fmt(b.saboteurBonus) }));
+  }
+  if (b.butGhepPenalty > 0) {
+    parts.push(tFmt('gameover.score_but_ghep', { n: fmt(b.butGhepPenalty) }));
   }
   return parts.join(' · ');
 }

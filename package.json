@@ -15,7 +15,8 @@
     "test:segments": "node scripts/test-segments.mjs",
     "test:scoring": "node scripts/test-scoring.mjs",
     "test:audio": "node scripts/test-audio-assets.mjs",
-    "test:bgm-mute": "node scripts/test-bgm-mute.mjs"
+    "test:bgm-mute": "node scripts/test-bgm-mute.mjs",
+    "test:but-ghep": "node scripts/test-but-ghep.mjs"
   },
   "dependencies": {
     "@vercel/kv": "^3.0.0",

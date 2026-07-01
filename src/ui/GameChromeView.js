@@ -1,5 +1,5 @@
 import { setUserPaused } from '../gameSession.js';
-import { t, tFmt } from '../core/i18n.js';
+import { t } from '../core/i18n.js';
 
 /** Trên HUD — không chồng lang/mute mặc định */
 const DEPTH = 68;
@@ -238,14 +238,15 @@ export class GameChromeView {
   }
 
   /**
-   * @param {number} usesLeft
+   * @param {number} hintUses
+   * @param {number} ghepUses
    * @param {boolean} show
    */
-  updateButHelp(usesLeft, show) {
-    const visible = show && usesLeft > 0;
+  updateButHelp(hintUses, ghepUses, show) {
+    const visible = show && (hintUses > 0 || ghepUses > 0);
     this.butBtn.setVisible(visible);
     if (visible) {
-      this.butBtn.setText(tFmt('game.but_help', { n: usesLeft }));
+      this.butBtn.setText(t('game.but_call'));
       this.butBtn.setAlpha(1);
     }
   }
@@ -259,9 +260,7 @@ export class GameChromeView {
     this.confirmYes?.txt?.setText(t('chrome.confirm_yes'));
     this.confirmNo?.txt?.setText(t('chrome.confirm_no'));
     if (this.butBtn?.visible) {
-      const m = this.butBtn.text.match(/\d+/);
-      const n = m ? Number(m[0]) : 0;
-      if (n > 0) this.butBtn.setText(tFmt('game.but_help', { n }));
+      this.butBtn.setText(t('game.but_call'));
     }
   }
 

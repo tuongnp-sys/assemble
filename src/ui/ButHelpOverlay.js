@@ -73,6 +73,9 @@ export class ButHelpOverlay {
     if (opts.kind === 'undo') {
       this.hintSub.setText(t('but_help.overlay_undo'));
       this.hintSub.setVisible(true);
+    } else if (opts.kind === 'ghep') {
+      this.hintSub.setText(t('but_ghep.overlay_sub'));
+      this.hintSub.setVisible(true);
     }
 
     this.scene.cameras.main.flash(200, 255, 235, 120, false);

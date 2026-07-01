@@ -70,6 +70,26 @@
     "holdMinSec": 0.2,
     "releaseEarlyIsFail": false
   },
+  "butGhep": {
+    "enabledFromAct": "2",
+    "usesPerAct": { "2": 1, "3": 1, "finale": 1 },
+    "scoreMultiplier": 0.5,
+    "manualLeft": { "finale": 3 },
+    "minManualLeft": 1,
+    "placeRanges": { "2": [5, 10], "3": [15, 20] },
+    "overlaySec": 3.5,
+    "lines": {
+      "2": [
+        "Bụt: \"Ta đã nối {n} lóng — kho còn lại ta sửa mắt rồi. Ghép nốt {left} lóng nhé!\""
+      ],
+      "3": [
+        "Bụt: \"Phép ghép xong — {n} lóng lên cột, {left} lóng con tự làm!\""
+      ],
+      "finale": [
+        "Bụt: \"Trăm đốt gần rồi — ta ghép {n} lóng, còn đúng {left} lóng cho con khoe tay!\""
+      ]
+    }
+  },
   "butHelp": {
     "enabledFromAct": "2",
     "usesPerAct": { "2": 2, "3": 3, "finale": 3 },

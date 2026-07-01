@@ -2,6 +2,7 @@ import { getActConfig, getGoldReward } from './actConfig.js';
 import { generateActSegments } from './SegmentGenerator.js';
 import { computeActScore, computeScoreBreakdown } from './scoring.js';
 import { getButHelpMaxUses } from './butHelpService.js';
+import { getButGhepMaxUses } from './butGhepService.js';
 import balance from '../data/balance.json' with { type: 'json' };
 /**
  * Trạng thái trận — không phụ thuộc Phaser.
@@ -43,6 +44,8 @@ export class GameState {
     this.assembleBonusGranted = false;
     this.ritualBonusGranted = false;
     this.butHelpUsesLeft = getButHelpMaxUses(actId);
+    this.butGhepUsesLeft = getButGhepMaxUses(actId);
+    this.butGhepUsed = false;
     /** @type {import('./scoring.js').ScoreBreakdown|null} */
     this.scoreBreakdown = null;
   }
@@ -71,6 +74,8 @@ export class GameState {
     this.assembleBonusGranted = false;
     this.ritualBonusGranted = false;
     this.butHelpUsesLeft = getButHelpMaxUses(actId);
+    this.butGhepUsesLeft = getButGhepMaxUses(actId);
+    this.butGhepUsed = false;
     this.scoreBreakdown = null;
   }
   tickTime(dt) {

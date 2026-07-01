@@ -4,6 +4,7 @@ import { AssembleEngine } from './AssembleEngine.js';
 import { RitualEngine } from './RitualEngine.js';
 import { SaboteurDirector } from './SaboteurDirector.js';
 import { findButHint, pickButHelpMessage } from './butHelpService.js';
+import { applyButGhepMagic, pickButGhepMessage } from './butGhepService.js';
 import balance from '../data/balance.json';
 import { getActConfig, getAssembleBonusSec, getRitualBonusSec } from './actConfig.js';
 
@@ -75,6 +76,20 @@ export class GameController {
   }
 
   /**
+   * Lựa chọn khi gọi Bụt trong ASSEMBLE.
+   */
+  getButCallOptions() {
+    const state = this.state;
+    if (state.ended || state.phase !== 'ASSEMBLE') {
+      return { hint: false, ghep: false };
+    }
+    return {
+      hint: state.butHelpUsesLeft > 0,
+      ghep: state.butGhepUsesLeft > 0,
+    };
+  }
+
+  /**
    * Gọi Bụt — chỉ bài lóng đúng (không tự ghép).
    */
   handleButHelp() {
@@ -100,6 +115,44 @@ export class GameController {
           hint,
           message,
           usesLeft: state.butHelpUsesLeft,
+        },
+      ],
+    };
+  }
+
+  /**
+   * Bụt ghép phép — biến hóa cột/kho + ghép hộ (trừ 50% điểm màn).
+   */
+  handleButGhep() {
+    const state = this.state;
+    if (this.butHelpFrozen || this.paused || state.ended) {
+      return { events: [] };
+    }
+    if (state.phase !== 'ASSEMBLE') {
+      return { events: [], reason: 'wrong_phase' };
+    }
+    if (state.butGhepUsesLeft <= 0) {
+      return { events: [], reason: 'no_ghep' };
+    }
+
+    const result = applyButGhepMagic(state);
+    if (result.placedCount <= 0 && result.transformedPrefix <= 0) {
+      return { events: [], reason: 'nothing_to_place' };
+    }
+
+    state.butGhepUsesLeft -= 1;
+    state.butGhepUsed = true;
+    this.assemble.reset();
+
+    const message = pickButGhepMessage(state.actId, result);
+
+    return {
+      events: [
+        {
+          type: 'but_ghep',
+          ...result,
+          message,
+          ghepUsesLeft: state.butGhepUsesLeft,
         },
       ],
     };

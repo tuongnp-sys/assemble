@@ -7,7 +7,7 @@ import { t } from './core/i18n.js';
 import { wireSceneLang } from './ui/LangToggle.js';
 
 /**
- * HowToPlayScene — hướng dẫn 4 bước (player + admin + guest từ login).
+ * HowToPlayScene — hướng dẫn 5 trang (player + admin + guest từ login).
  */
 export class HowToPlayScene extends Phaser.Scene {
   constructor() {

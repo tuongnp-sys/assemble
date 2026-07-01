@@ -6,7 +6,7 @@ import { t } from '../core/i18n.js';
 import { subscribeLangChange } from '../core/locale.js';
 
 /**
- * Panel hướng dẫn 4 trang — swipe bằng nút ‹ ›.
+ * Panel hướng dẫn — swipe bằng nút ‹ › (nội dung từ how-to-play.json).
  */
 export class HowToPlayPanel {
   /**

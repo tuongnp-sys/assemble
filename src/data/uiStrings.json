@@ -66,6 +66,7 @@
     "ritual_carving": { "vi": "Khắc nhập…", "en": "Carving in…" },
     "briefing_tap": { "vi": "Chạm để bắt đầu", "en": "Tap to start" },
     "but_help": { "vi": "✨ GỌI BỤT ({n})", "en": "✨ CALL FAIRY ({n})" },
+    "but_call": { "vi": "✨ GỌI BỤT", "en": "✨ CALL FAIRY" },
     "undo_only_bottom": { "vi": "Chỉ gỡ lóng dưới cùng", "en": "Only remove bottom segment" }
   },
   "chrome": {
@@ -84,6 +85,7 @@
     "bonus_ritual": { "vi": "KHẮC NHẬP", "en": "CARVE IN" },
     "ritual_early": { "vi": "Giữ thêm một chút…", "en": "Hold a little longer…" },
     "but_no_uses": { "vi": "Hết lượt gọi Bụt", "en": "No fairy help left" },
+    "but_ghep_done": { "vi": "Bụt đã ghép {n} lóng — còn {left} lóng", "en": "Fairy placed {n} — {left} left" },
     "dev_auto": { "vi": "[DEV] Cột đầy — auto Khắc Nhập…", "en": "[DEV] Column full — auto Carve In…" }
   },
   "saboteur": {
@@ -98,6 +100,15 @@
     "msg_pool_2": { "vi": "Bụt: \"Con bình tĩnh… lóng sáng là đúng mắt nối!\"", "en": "Fairy: \"Stay calm… the glowing one matches!\"" },
     "msg_undo_1": { "vi": "Bụt: \"Lóng này chưa hợp — trả lóng dưới cùng về kho!\"", "en": "Fairy: \"Wrong fit — return the bottom segment!\"" },
     "msg_none_1": { "vi": "Bụt: \"Hãy gom thêm lóng hoặc gỡ lóng sai trước đã!\"", "en": "Fairy: \"Collect more or undo a wrong segment first!\"" }
+  },
+  "but_ghep": {
+    "choice_title": { "vi": "Bụt có thể giúp con thế nào?", "en": "How can the fairy help?" },
+    "choice_hint": { "vi": "✨ Chỉ lóng (không trừ điểm)", "en": "✨ Hint only (no score penalty)" },
+    "choice_ghep": { "vi": "🪄 Ghép phép (ghép hộ + sửa mắt kho)", "en": "🪄 Magic assemble (bulk place + fix pool)" },
+    "choice_penalty": { "vi": "Đổi lại: trừ 50% điểm màn này", "en": "Cost: −50% of this act's score" },
+    "choice_cancel": { "vi": "Để sau", "en": "Not now" },
+    "overlay_sub": { "vi": "✨ Mắt tre đã khớp — ghép nốt phần còn lại ✨", "en": "✨ Joints fixed — finish the rest ✨" },
+    "msg_done": { "vi": "Bụt: \"Ta ghép {n} lóng — còn {left} lóng con tự làm nhé!\"", "en": "Fairy: \"I placed {n} — you finish the last {left}!\"" }
   },
   "howto": {
     "start": { "vi": "BẮT ĐẦU", "en": "START" }
@@ -129,7 +140,8 @@
     "score_base": { "vi": "Cơ bản {n}", "en": "Base {n}" },
     "score_time": { "vi": "Thời gian +{n}", "en": "Time +{n}" },
     "score_decoy": { "vi": "Tap sai −{n}", "en": "Wrong taps −{n}" },
-    "score_saboteur": { "vi": "Vượt Phú ông +{n}", "en": "Survived sabotage +{n}" }
+    "score_saboteur": { "vi": "Vượt Phú ông +{n}", "en": "Survived sabotage +{n}" },
+    "score_but_ghep": { "vi": "Phép Bụt −{n}", "en": "Fairy magic −{n}" }
   },
   "finale": {
     "success": { "vi": "KHẮC NHẬP THÀNH CÔNG!", "en": "CARVE IN SUCCESS!" },
