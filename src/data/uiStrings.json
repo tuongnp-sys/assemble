@@ -1,0 +1,206 @@
+{
+  "common": {
+    "menu": { "vi": "☰ MENU", "en": "☰ MENU" },
+    "back_menu": { "vi": "← MENU", "en": "← MENU" },
+    "exit": { "vi": "Thoát", "en": "Exit" },
+    "gold": { "vi": "vàng", "en": "gold" },
+    "segments": { "vi": "lóng", "en": "joints" },
+    "joints_unit": { "vi": "đốt", "en": "joints" }
+  },
+  "acts": {
+    "1": { "vi": "Act 1 — Rừng non", "en": "Act 1 — Young Bamboo" },
+    "2": { "vi": "Act 2 — Tre già", "en": "Act 2 — Old Bamboo" },
+    "3": { "vi": "Act 3 — Đêm gió", "en": "Act 3 — Windy Night" },
+    "finale": { "vi": "Finale — Trăm đốt", "en": "Finale — Hundred Joints" }
+  },
+  "login": {
+    "title": { "vi": "TRE TRĂM ĐỐT", "en": "HUNDRED BAMBOO" },
+    "subtitle": { "vi": "Đăng nhập để lưu thành tích", "en": "Sign in to save your scores" },
+    "nickname_ph": { "vi": "Tên hiển thị (2–16 ký tự)", "en": "Display name (2–16 chars)" },
+    "play": { "vi": "VÀO CHƠI", "en": "PLAY" },
+    "story": { "vi": "TRUYỆN KỂ", "en": "STORY" },
+    "admin": { "vi": "Admin", "en": "Admin" },
+    "admin_user_ph": { "vi": "Tài khoản admin", "en": "Admin username" },
+    "admin_pass_ph": { "vi": "Mật khẩu", "en": "Password" },
+    "admin_back": { "vi": "← Chơi", "en": "← Play" },
+    "admin_login": { "vi": "Đăng nhập", "en": "Sign in" },
+    "admin_title": { "vi": "Đăng nhập quản trị", "en": "Admin sign in" },
+    "err": { "vi": "Lỗi đăng nhập", "en": "Login failed" },
+    "err_short": { "vi": "Tên cần ít nhất 2 ký tự", "en": "Name needs at least 2 characters" },
+    "err_long": { "vi": "Tên tối đa 16 ký tự", "en": "Name max 16 characters" },
+    "err_admin": { "vi": "Sai tài khoản hoặc mật khẩu admin", "en": "Wrong admin username or password" },
+    "back": { "vi": "← Đăng nhập", "en": "← Sign in" }
+  },
+  "menu": {
+    "title": { "vi": "TRE TRĂM ĐỐT", "en": "HUNDRED BAMBOO" },
+    "hello": { "vi": "Xin chào, {name}", "en": "Hello, {name}" },
+    "tagline": { "vi": "Khắc Nhập · Khắc Xuất", "en": "Carve In · Carve Out" },
+    "admin_preview": { "vi": "(Chế độ xem — không ghi điểm)", "en": "(Preview — scores not saved)" },
+    "preview_name": { "vi": "👀 Xem thử (Admin)", "en": "👀 Admin preview" },
+    "progress_complete": { "vi": "👑 Đã hoàn thành — Tre Master!", "en": "👑 Complete — Bamboo Master!" },
+    "progress": { "vi": "Tiến độ: {n}/4 · {act}", "en": "Progress: {n}/4 · {act}" },
+    "progress_start": { "vi": "Bắt đầu hành trình trăm đốt", "en": "Begin the hundred-joint journey" },
+    "gold_line": { "vi": "🪙 {n} vàng", "en": "🪙 {n} gold" },
+    "best_line": { "vi": "🏆 Kỷ lục: {score} điểm", "en": "🏆 Best: {score} pts" },
+    "continue": { "vi": "TIẾP TỤC — {act}", "en": "CONTINUE — {act}" },
+    "start": { "vi": "BẮT ĐẦU", "en": "START" },
+    "restart": { "vi": "BẮT ĐẦU LẠI", "en": "START OVER" },
+    "leaderboard": { "vi": "BẢNG XẾP HẠNG", "en": "LEADERBOARD" },
+    "howto": { "vi": "CÁCH CHƠI", "en": "HOW TO PLAY" },
+    "back_admin": { "vi": "← Admin", "en": "← Admin" }
+  },
+  "hud": {
+    "phase_collect": { "vi": "GOM TRE", "en": "COLLECT" },
+    "phase_assemble": { "vi": "GHÉP LÓNG", "en": "ASSEMBLE" },
+    "phase_ritual": { "vi": "KHẮC NHẬP", "en": "CARVE IN" }
+  },
+  "game": {
+    "collect_hint": { "vi": "Chạm lóng đúng · Tránh tre giả", "en": "Tap real bamboo · Avoid decoys" },
+    "pool_hint": { "vi": "Chạm lóng đúng mắt → tự ghép lên cột", "en": "Tap matching joint → auto-place on column" },
+    "column_title": { "vi": "CỘT GHÉP", "en": "COLUMN" },
+    "drop_wait": { "vi": "Ô vàng\nchờ ghép", "en": "Yellow zone\nwaiting" },
+    "drop_undo": { "vi": "Chạm lóng\ndưới → kho", "en": "Tap bottom\n→ pool" },
+    "buried": { "vi": "🌱 {n} đốt phía dưới", "en": "🌱 {n} joints below" },
+    "ritual_btn": { "vi": "KHẮC NHẬP", "en": "CARVE IN" },
+    "ritual_hold": { "vi": "Giữ nút ~1 giây (đến khi xanh)", "en": "Hold ~1 sec (until green)" },
+    "ritual_carving": { "vi": "Khắc nhập…", "en": "Carving in…" },
+    "briefing_tap": { "vi": "Chạm để bắt đầu", "en": "Tap to start" },
+    "but_help": { "vi": "✨ GỌI BỤT ({n})", "en": "✨ CALL FAIRY ({n})" },
+    "undo_only_bottom": { "vi": "Chỉ gỡ lóng dưới cùng", "en": "Only remove bottom segment" }
+  },
+  "chrome": {
+    "pause": { "vi": "TẠM DỪNG", "en": "PAUSED" },
+    "resume": { "vi": "TIẾP TỤC", "en": "RESUME" },
+    "to_menu": { "vi": "VỀ MENU", "en": "MENU" },
+    "menu_confirm": { "vi": "Về menu?\nTiến độ màn này sẽ mất.", "en": "Leave menu?\nThis run will be lost." },
+    "confirm_yes": { "vi": "VỀ", "en": "LEAVE" },
+    "confirm_no": { "vi": "Ở LẠI", "en": "STAY" }
+  },
+  "toast": {
+    "unsnap": { "vi": "Đã trả lóng về kho", "en": "Segment returned to pool" },
+    "wrong_joint": { "vi": "Mắt nối không khớp — chọn lóng khác", "en": "Joints don't match — pick another" },
+    "time_bonus": { "vi": "+{sec}s {label}", "en": "+{sec}s {label}" },
+    "bonus_assemble": { "vi": "GHÉP LÓNG", "en": "ASSEMBLE" },
+    "bonus_ritual": { "vi": "KHẮC NHẬP", "en": "CARVE IN" },
+    "ritual_early": { "vi": "Giữ thêm một chút…", "en": "Hold a little longer…" },
+    "but_no_uses": { "vi": "Hết lượt gọi Bụt", "en": "No fairy help left" },
+    "dev_auto": { "vi": "[DEV] Cột đầy — auto Khắc Nhập…", "en": "[DEV] Column full — auto Carve In…" }
+  },
+  "saboteur": {
+    "drop": { "vi": "Phú ông ném đá!", "en": "Rich Man throws rocks!" },
+    "decoy": { "vi": "Phú ông thả gà!", "en": "Rich Man releases a chicken!" },
+    "hud": { "vi": "Sét! Mất tầm nhìn…", "en": "Lightning! Can't see the timer…" }
+  },
+  "but_help": {
+    "overlay_pool": { "vi": "✨ Chạm lóng sáng trong kho ✨", "en": "✨ Tap the glowing segment ✨" },
+    "overlay_undo": { "vi": "↩ Chạm lóng dưới cùng trên cột", "en": "↩ Tap bottom segment on column" },
+    "msg_pool_1": { "vi": "Bụt: \"Nhìn chấm màu — lóng ấy khớp đỉnh cột!\"", "en": "Fairy: \"See the dot color — that joint fits the top!\"" },
+    "msg_pool_2": { "vi": "Bụt: \"Con bình tĩnh… lóng sáng là đúng mắt nối!\"", "en": "Fairy: \"Stay calm… the glowing one matches!\"" },
+    "msg_undo_1": { "vi": "Bụt: \"Lóng này chưa hợp — trả lóng dưới cùng về kho!\"", "en": "Fairy: \"Wrong fit — return the bottom segment!\"" },
+    "msg_none_1": { "vi": "Bụt: \"Hãy gom thêm lóng hoặc gỡ lóng sai trước đã!\"", "en": "Fairy: \"Collect more or undo a wrong segment first!\"" }
+  },
+  "howto": {
+    "start": { "vi": "BẮT ĐẦU", "en": "START" }
+  },
+  "leaderboard": {
+    "title": { "vi": "BẢNG XẾP HẠNG", "en": "LEADERBOARD" },
+    "tab_total": { "vi": "TỔNG", "en": "TOTAL" },
+    "empty_total": { "vi": "Chưa có điểm — hãy thắng một màn!", "en": "No scores yet — win an act!" },
+    "empty_act": { "vi": "Chưa có ai thắng {act}", "en": "No winners for {act} yet" },
+    "your_rank": { "vi": "Hạng của bạn: #{rank}", "en": "Your rank: #{rank}" },
+    "no_rank": { "vi": "Bạn chưa có điểm ở màn này", "en": "No score on this act yet" }
+  },
+  "gameover": {
+    "victory": { "vi": "KHẮC NHẬP!", "en": "CARVE IN!" },
+    "finale": { "vi": "TRĂM ĐỐT!", "en": "HUNDRED JOINTS!" },
+    "defeat_ritual": { "vi": "KHẮC XUẤT", "en": "CARVE OUT" },
+    "defeat_time": { "vi": "HẾT GIỜ", "en": "TIME'S UP" },
+    "bad_joint": { "vi": "Mắt nối sai ở lóng {n}.", "en": "Wrong joint at segment {n}." },
+    "time_tip": { "vi": "Hãy gom tre nhanh hơn hoặc ghép gọn tay hơn.", "en": "Collect faster or assemble more efficiently." },
+    "new_best": { "vi": "🏆 KỶ LỤC MỚI — {score} điểm", "en": "🏆 NEW BEST — {score} pts" },
+    "score_line": { "vi": "🏆 {score} điểm · Kỷ lục {best}", "en": "🏆 {score} pts · Best {best}" },
+    "gold_time": { "vi": "+{gold} vàng · {sec}s còn", "en": "+{gold} gold · {sec}s left" },
+    "rank_act": { "vi": "📊 Hạng màn này: #{rank}", "en": "📊 Act rank: #{rank}" },
+    "ach_new": { "vi": "{icon} THÀNH TỰU: {title}", "en": "{icon} ACHIEVEMENT: {title}" },
+    "ach_have": { "vi": "{icon} {title}", "en": "{icon} {title}" },
+    "continue": { "vi": "TIẾP TỤC — {act}", "en": "CONTINUE — {act}" },
+    "replay": { "vi": "CHƠI LẠI", "en": "RETRY" },
+    "menu": { "vi": "MENU", "en": "MENU" },
+    "score_base": { "vi": "Cơ bản {n}", "en": "Base {n}" },
+    "score_time": { "vi": "Thời gian +{n}", "en": "Time +{n}" },
+    "score_decoy": { "vi": "Tap sai −{n}", "en": "Wrong taps −{n}" },
+    "score_saboteur": { "vi": "Vượt Phú ông +{n}", "en": "Survived sabotage +{n}" }
+  },
+  "finale": {
+    "success": { "vi": "KHẮC NHẬP THÀNH CÔNG!", "en": "CARVE IN SUCCESS!" },
+    "quote_connect": { "vi": "Bụt: \"Giờ hãy kết nối bốn đoạn tre\nthành cây trăm đốt!\"", "en": "Fairy: \"Now join four bamboo parts\ninto the hundred-joint tree!\"" },
+    "connect_btn": { "vi": "✨ KẾT NỐI TRĂM ĐỐT", "en": "✨ JOIN HUNDRED JOINTS" },
+    "connecting": { "vi": "Đang khắc nhập…", "en": "Carving in…" },
+    "carve": { "vi": "Khắc nhập!", "en": "Carve in!" },
+    "hundred": { "vi": "🌟 TRĂM ĐỐT! 🌟", "en": "🌟 HUNDRED JOINTS! 🌟" },
+    "wedding": { "vi": "Dân làng reo hò — chúc mừng đôi uyên ương!", "en": "The village cheers — bless the happy couple!" },
+    "ach_new": { "vi": "{icon} THÀNH TỰU MỚI: {title}\n{desc}", "en": "{icon} NEW ACHIEVEMENT: {title}\n{desc}" },
+    "ach_have": { "vi": "{icon} {title}", "en": "{icon} {title}" },
+    "exit_btn": { "vi": "✨ THOÁT", "en": "✨ EXIT" },
+    "confront": {
+      "rich_refuse": {
+        "vi": "Đừng gả tiểu thư cho nó!\nĐừng gả, đừng gả…",
+        "en": "Don't marry the lady to him!\nNo, no, don't marry her…"
+      },
+      "phu_refuse": {
+        "vi": "Xù kèo! Không gả, không gả!\nMột trăm đốt rời cũng không gả!",
+        "en": "No deal! No marriage!\nA hundred loose joints — still no bride!"
+      },
+      "phu_beg": {
+        "vi": "Đồng ý gả! Đồng ý gả!\nHãy thả xuống!!!",
+        "en": "I agree! I agree to the wedding!\nLet me down!!!"
+      },
+      "rich_beg": {
+        "vi": "Tha cho chúng tôi!\nChúng tôi không phá nữa, không phá nữa!!!",
+        "en": "Spare us!\nWe won't crash the wedding anymore!!!"
+      },
+      "btn_khacnhap_phu": { "vi": "✨ KHẮC NHẬP — Phú ông", "en": "✨ CARVE IN — Rich Man" },
+      "btn_khacnhap_rich": { "vi": "✨ KHẮC NHẬP — Bọn phá đám", "en": "✨ CARVE IN — Wedding crashers" },
+      "btn_khacxuat_phu": { "vi": "KHẮC XUẤT — Phú ông", "en": "CARVE OUT — Rich Man" },
+      "btn_khacxuat_rich": { "vi": "KHẮC XUẤT — Bọn phá đám", "en": "CARVE OUT — Wedding crashers" }
+    }
+  },
+  "achievement": {
+    "tre_master_title": { "vi": "Tre Master", "en": "Bamboo Master" },
+    "tre_master_desc": { "vi": "Khắc nhập trăm đốt — ghép cả hành trình", "en": "Carved in hundred joints — the full journey" }
+  },
+  "story": {
+    "close": { "vi": "✕ Đóng", "en": "✕ Close" }
+  },
+  "admin_hub": {
+    "title": { "vi": "🛠 ADMIN — TEST GAME", "en": "🛠 ADMIN — TEST GAME" },
+    "no_lb": { "vi": "Không ghi điểm leaderboard", "en": "Scores not saved to leaderboard" },
+    "unlock_ok": { "vi": "✓ Unlock: {n}/4 màn · {gold} vàng", "en": "✓ Unlock: {n}/4 acts · {gold} gold" },
+    "reset_ok": { "vi": "✓ Đã reset toàn bộ tiến độ campaign", "en": "✓ Campaign progress reset" },
+    "view_menu": { "vi": "XEM MENU NGƯỜI CHƠI", "en": "VIEW PLAYER MENU" },
+    "logout": { "vi": "ĐĂNG XUẤT", "en": "LOG OUT" },
+    "change_cred": { "vi": "ĐỔI TÀI KHOẢN", "en": "CHANGE ACCOUNT" }
+  },
+  "admin": {
+    "auth": {
+      "network": { "vi": "Không kết nối được máy chủ — chạy npm run dev (API + web)", "en": "Cannot reach server — run npm run dev (API + web)" },
+      "server": { "vi": "Lỗi máy chủ xác thực", "en": "Authentication server error" },
+      "session": { "vi": "Phiên admin hết hạn — đăng nhập lại", "en": "Admin session expired — sign in again" },
+      "disabled": { "vi": "Chế độ admin tắt trên bản này", "en": "Admin mode disabled on this build" }
+    },
+    "change": {
+      "title": { "vi": "Đổi tài khoản / mật khẩu", "en": "Change account / password" },
+      "current": { "vi": "Mật khẩu hiện tại", "en": "Current password" },
+      "new_user": { "vi": "Tên đăng nhập mới (để trống = giữ)", "en": "New username (blank = keep)" },
+      "new_pass": { "vi": "Mật khẩu mới", "en": "New password" },
+      "confirm": { "vi": "Xác nhận mật khẩu mới", "en": "Confirm new password" },
+      "hint": { "vi": "Mật khẩu mới tối thiểu 8 ký tự. Lưu trên server — không nằm trong mã game.", "en": "New password min 8 chars. Stored on server — not in game code." },
+      "save": { "vi": "LƯU", "en": "SAVE" },
+      "cancel": { "vi": "HỦY", "en": "CANCEL" },
+      "ok": { "vi": "Đã cập nhật — dùng mật khẩu mới lần sau", "en": "Updated — use new password next time" },
+      "mismatch": { "vi": "Mật khẩu xác nhận không khớp", "en": "Confirmation password does not match" },
+      "short": { "vi": "Mật khẩu mới cần ít nhất 8 ký tự", "en": "New password needs at least 8 characters" },
+      "invalid": { "vi": "Vui lòng điền đầy đủ", "en": "Please fill in all required fields" }
+    }
+  }
+}

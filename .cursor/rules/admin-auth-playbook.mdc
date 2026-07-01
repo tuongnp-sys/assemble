@@ -1,0 +1,28 @@
+---
+description: Admin login API + JWT + KV/file store — đọc playbook trước khi sửa auth, API, AdminHub, form DOM
+globs: api/**/*.js,scripts/api-dev.mjs,src/core/apiClient.js,src/core/adminAuthService.js,src/core/userSession.js,src/ui/AdminCredentialsPanel.js,src/AdminHubScene.js,src/LoginScene.js,vite.config.js,vercel.json,.env.example,docs/ADMIN_AUTH.md,docs/ADMIN_AUTH_PLAYBOOK.md
+alwaysApply: false
+---
+
+# Admin auth (server-side)
+
+Trước khi sửa file trong glob, đọc **`docs/ADMIN_AUTH_PLAYBOOK.md`**. Setup nhanh: **`docs/ADMIN_AUTH.md`**.
+
+## Bắt buộc
+
+1. **Không** verify password / hardcode credential trong client — đã xóa `authConfig.js`; giữ verify trên `api/lib/adminStore.js`.
+2. **JWT** trong `sessionStorage`; `getCurrentUser()` admin **phải** có `getAdminToken()` — không tin `localStorage.role` alone.
+3. **Dev:** `npm run dev` (web + API :8787); Vite proxy `/api`. Login fail liên tục → kill stale process 8787, restart sau khi có `.env`.
+4. **Store:** KV (prod) → `.data/admin-credentials.json` (local) → env bootstrap. **Không** PostgreSQL/Neon cho admin hiện tại.
+5. **API errors** trả `errorKey` — client `t(errorKey)`; không hardcode tiếng Việt trong service.
+6. **DOM panel** (`AdminCredentialsPanel`): `scene.input.enabled = false` khi mở; restore `destroy()`; backdrop không interactive; `pointer-events: auto` trên form.
+7. **`VITE_ENABLE_ADMIN=false`** trên build player public nếu không cần nút Admin.
+8. **Không commit** `.env` / secrets.
+
+## Smoke test
+
+Login admin đúng/sai; đổi MK → file `.data/` hoặc KV; refresh tab; `curl` POST login :8787; `npm run build`.
+
+## Git
+
+Không commit/push trừ khi user yêu cầu.

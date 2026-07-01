@@ -1,0 +1,49 @@
+{
+  "basePath": "audio",
+  "skipPreload": ["victory", "defeat"],
+  "proceduralSfx": [
+    "ui_tap",
+    "pool_pick",
+    "snap",
+    "tap_ok",
+    "tap_bad",
+    "khacnhap",
+    "khacxuat"
+  ],
+  "tracks": {
+    "menu": "bgm_menu",
+    "collect": "bgm_collect",
+    "assemble": "bgm_assemble",
+    "victory": "bgm_victory",
+    "defeat": "bgm_defeat",
+    "finale_merge": "bgm_finale_merge",
+    "finale_confront": "bgm_finale_confront",
+    "finale_wedding": "bgm_finale_wedding",
+    "khacnhap": "sfx_khacnhap",
+    "khacxuat": "sfx_khacxuat"
+  },
+  "loop": {
+    "menu": true,
+    "collect": true,
+    "assemble": true,
+    "victory": false,
+    "defeat": false,
+    "finale_merge": false,
+    "finale_confront": true,
+    "finale_wedding": true,
+    "khacnhap": false,
+    "khacxuat": false
+  },
+  "volume": {
+    "menu": 0.45,
+    "collect": 0.5,
+    "assemble": 0.5,
+    "victory": 0.65,
+    "defeat": 0.6,
+    "finale_merge": 0.6,
+    "finale_confront": 0.55,
+    "finale_wedding": 0.6,
+    "khacnhap": 0.85,
+    "khacxuat": 0.85
+  }
+}

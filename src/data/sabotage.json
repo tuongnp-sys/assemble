@@ -1,0 +1,21 @@
+{
+  "phuong_nem_da": {
+    "id": "phuong_nem_da",
+    "minProgress": 0.6,
+    "maxTimeLeft": 30,
+    "cooldownMs": 18000,
+    "dropCount": 1
+  },
+  "phuong_tha_ga": {
+    "id": "phuong_tha_ga",
+    "minProgress": 0.5,
+    "cooldownMs": 22000,
+    "injectDecoy": 1
+  },
+  "set_mat_hud": {
+    "id": "set_mat_hud",
+    "minProgress": 0.7,
+    "cooldownMs": 25000,
+    "hideHudMs": 2000
+  }
+}

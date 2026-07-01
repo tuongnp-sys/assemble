@@ -1,0 +1,573 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: #1a3d2e;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+#game-container {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+  overflow: hidden;
+}
+
+#game-container canvas {
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  z-index: 0;
+}
+
+/* GlobalHtmlChrome — VN/EN + mute (mọi màn, main.js initGlobalChrome) */
+.global-html-chrome {
+  position: fixed;
+  z-index: 10;
+  pointer-events: none;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+.global-html-chrome[hidden] {
+  display: none !important;
+}
+
+.global-chrome-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  pointer-events: none;
+}
+
+.global-chrome-lang,
+.global-chrome-mute {
+  pointer-events: auto;
+  touch-action: manipulation;
+}
+
+/* Góc trái (52, 48) — khớp LangToggle canvas cũ, không chồng đồng hồ giữa */
+.global-chrome-lang {
+  position: absolute;
+  left: 52px;
+  top: 40px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(129, 199, 132, 0.9);
+  background: rgba(27, 61, 27, 0.92);
+}
+
+.global-chrome-lang-btn {
+  border: none;
+  background: transparent;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 2px 4px;
+  color: #78909c;
+}
+
+.global-chrome-lang-btn.is-active {
+  color: #fff9c4;
+}
+
+.global-chrome-lang-btn[data-lang='en'].is-active {
+  color: #90caf9;
+}
+
+.global-chrome-lang-sep {
+  color: #78909c;
+  font-size: 10px;
+  user-select: none;
+}
+
+.global-chrome-mute {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  z-index: 2;
+  min-width: 48px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(129, 199, 132, 0.9);
+  background: rgba(27, 61, 27, 0.92);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* LoginScreen — card HTML (chrome: GlobalHtmlChrome) */
+.login-screen {
+  position: fixed;
+  z-index: 8;
+  pointer-events: none;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+.login-screen[hidden] {
+  display: none !important;
+}
+
+.login-card,
+.login-admin-link,
+.login-field,
+.login-btn {
+  pointer-events: auto;
+}
+
+.login-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(320px, 90%);
+  padding: 24px 20px 20px;
+  border-radius: 12px;
+  border: 2px solid rgba(129, 199, 132, 0.55);
+  background: rgba(20, 48, 22, 0.92);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  text-align: center;
+}
+
+.login-title {
+  margin: 0 0 8px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #f5e6a8;
+  letter-spacing: 0.02em;
+}
+
+.login-subtitle,
+.login-admin-heading {
+  margin: 0 0 16px;
+  font-size: 13px;
+  color: #c8e6c9;
+  line-height: 1.4;
+}
+
+.login-admin-heading {
+  color: #90caf9;
+  font-weight: 600;
+}
+
+.login-error {
+  margin: 0 0 12px;
+  font-size: 12px;
+  color: #ef9a9a;
+  min-height: 0;
+}
+
+.login-error[hidden] {
+  display: none !important;
+}
+
+.login-mode[hidden] {
+  display: none !important;
+}
+
+.login-mode-player-only[hidden],
+.login-mode-admin-only[hidden] {
+  display: none !important;
+}
+
+.login-field {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 12px 14px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid #66bb6a;
+  background: #e8f5e9;
+  color: #1b3d1e;
+  text-align: center;
+  touch-action: manipulation;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+.login-field::placeholder {
+  color: #558b2f;
+}
+
+.login-field-admin {
+  border-color: #64b5f6;
+  background: #e3f2fd;
+  color: #0d1b4d;
+}
+
+.login-field-admin::placeholder {
+  color: #1565c0;
+}
+
+.login-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.login-actions-split .login-btn {
+  flex: 1;
+  min-width: 0;
+}
+
+.login-actions-triple {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.login-actions-triple .login-btn {
+  flex: 1 1 30%;
+  min-width: 0;
+  font-size: 10px;
+  padding: 11px 4px;
+}
+
+.login-btn-howto {
+  background: #455a64;
+  border-color: #b0bec5;
+}
+
+.login-btn {
+  padding: 12px 10px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+  color: #fff;
+}
+
+.login-btn-story {
+  background: #6d4c41;
+  border-color: #ffcc80;
+}
+
+.login-btn-play {
+  background: #2e7d32;
+  border-color: #a5d6a7;
+}
+
+.login-btn-secondary {
+  background: #455a64;
+  border-color: #b0bec5;
+}
+
+.login-btn-primary {
+  background: #1565c0;
+  border-color: #90caf9;
+}
+
+.login-admin-link {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid #78909c;
+  background: rgba(55, 71, 79, 0.9);
+  color: #cfd8dc;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.login-admin-link[hidden] {
+  display: none !important;
+}
+
+/* Form HTML khác (story, admin cred) */
+input,
+textarea,
+select,
+.story-parchment,
+.admin-cred-form {
+  touch-action: manipulation;
+}
+
+@media (min-width: 901px) {
+  #game-container canvas {
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  }
+}
+
+/* Folk tale scroll — StoryScrollOverlay (HTML overlay) */
+.story-overlay {
+  position: fixed;
+  z-index: 9;
+  pointer-events: none;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+.story-backdrop,
+.story-shell,
+.story-close,
+.story-parchment {
+  pointer-events: auto;
+}
+
+.story-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 22, 40, 0.72);
+}
+
+.story-shell {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: min(380px, 94%);
+  max-height: 92%;
+}
+
+.story-close {
+  flex-shrink: 0;
+  min-width: 120px;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 6px;
+  border: 2px solid #ffcc80;
+  background: #5d4037;
+  color: #fff9c4;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.story-parchment {
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: min(540px, 80vh);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 28px 24px 32px;
+  background:
+    linear-gradient(180deg, rgba(255, 248, 220, 0.35) 0%, transparent 8%),
+    linear-gradient(0deg, rgba(139, 90, 43, 0.12) 0%, transparent 6%),
+    linear-gradient(180deg, #f5e6b8 0%, #e8d5a3 45%, #dcc68a 100%);
+  border: 3px solid #a67c52;
+  border-radius: 6px 6px 14px 14px;
+  box-shadow:
+    inset 0 0 28px rgba(139, 90, 43, 0.22),
+    inset 0 2px 0 rgba(255, 252, 235, 0.6),
+    0 10px 28px rgba(0, 0, 0, 0.4);
+  font-family: 'Noto Serif', 'Noto Serif Vietnamese', Georgia, serif;
+  font-size: 16px;
+  line-height: 1.78;
+  color: #3e2723;
+  text-align: left;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-kerning: normal;
+  hyphens: none;
+  word-break: normal;
+  overflow-wrap: break-word;
+  -webkit-user-select: text;
+  user-select: text;
+  touch-action: pan-y;
+  scrollbar-width: thin;
+  scrollbar-color: #8d6e63 #f0e0c0;
+}
+
+.story-parchment::-webkit-scrollbar {
+  width: 9px;
+}
+
+.story-parchment::-webkit-scrollbar-track {
+  background: #f0e0c0;
+  border-radius: 4px;
+}
+
+.story-parchment::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #a1887f, #6d4c41);
+  border-radius: 4px;
+  border: 1px solid #5d4037;
+}
+
+.story-parchment .story-title {
+  text-align: center;
+  font-size: 19px;
+  font-weight: 700;
+  color: #9a7209;
+  margin: 0 0 16px;
+  line-height: 1.4;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.story-parchment .story-narration {
+  margin: 0 0 14px;
+  text-align: left;
+}
+
+.story-parchment .story-dialogue {
+  margin: 0 0 14px;
+  font-style: normal;
+  font-weight: 500;
+  padding: 8px 12px 8px 14px;
+  border-left: 3px solid rgba(166, 124, 82, 0.5);
+  background: rgba(255, 252, 235, 0.35);
+  border-radius: 0 6px 6px 0;
+}
+
+.story-parchment .story-speaker-phu {
+  color: #b71c1c;
+  font-weight: 600;
+}
+
+.story-parchment .story-speaker-but {
+  color: #6a1b9a;
+  font-weight: 600;
+}
+
+.story-parchment .story-speaker-farmer {
+  color: #0d47a1;
+  font-weight: 600;
+}
+
+.story-parchment .story-magic {
+  margin: 0 0 14px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 17px;
+  color: #e65100;
+  letter-spacing: 0.03em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+/* Admin credentials — HTML overlay (AdminCredentialsPanel.js) */
+.admin-cred-overlay {
+  position: fixed;
+  z-index: 12;
+  pointer-events: none;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.admin-cred-backdrop,
+.admin-cred-form {
+  pointer-events: auto;
+}
+
+.admin-cred-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.admin-cred-form {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(300px, 90%);
+  padding: 20px 18px 18px;
+  background: #1a2e1a;
+  border: 2px solid #81c784;
+  border-radius: 10px;
+  color: #e8f5e9;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  touch-action: manipulation;
+}
+
+.admin-cred-title {
+  margin: 0 0 14px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff9c4;
+  text-align: center;
+}
+
+.admin-cred-label {
+  display: block;
+  font-size: 11px;
+  color: #a5d6a7;
+  margin: 8px 0 4px;
+}
+
+.admin-cred-form input,
+.admin-cred-input {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #4caf50;
+  background: #0d1f12;
+  color: #e8f5e9;
+  box-sizing: border-box;
+}
+
+.admin-cred-hint {
+  margin: 10px 0 6px;
+  font-size: 10px;
+  color: #90caf9;
+  line-height: 1.4;
+}
+
+.admin-cred-msg {
+  min-height: 18px;
+  font-size: 11px;
+  margin: 4px 0 8px;
+}
+
+.admin-cred-msg.error {
+  color: #ef9a9a;
+}
+
+.admin-cred-msg.ok {
+  color: #a5d6a7;
+}
+
+.admin-cred-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.admin-cred-btn {
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 6px;
+  border: 1px solid #78909c;
+  background: #37474f;
+  color: #fff;
+  cursor: pointer;
+}
+
+.admin-cred-btn.primary {
+  background: #2e7d32;
+  border-color: #a5d6a7;
+}

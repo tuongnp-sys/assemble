@@ -1,0 +1,37 @@
+---
+description: Song ngữ VN/EN, overlay Phaser/HTML/DOM, lifecycle — đọc playbook trước khi sửa i18n hoặc UI overlay
+globs: src/core/locale.js,src/core/i18n.js,src/ui/LangToggle.js,src/ui/langOverlayHelper.js,src/ui/htmlModalHelper.js,src/ui/*Overlay*.js,src/ui/howTo/**,src/LoginScene.js,src/MenuScene.js,src/GameScene.js,src/GameOverScene.js,src/LeaderboardScene.js,src/HowToPlayScene.js,src/FinaleCinematicScene.js,src/AdminHubScene.js,src/data/uiStrings.json,src/data/content/*.json,css/style.css,docs/I18N_MULTISCENE_PLAYBOOK.md
+alwaysApply: false
+---
+
+# i18n + multi-scene / overlay (Phaser H5)
+
+Trước khi sửa file trong glob, đọc **`docs/I18N_MULTISCENE_PLAYBOOK.md`**.
+
+Playbook gộp kinh nghiệm **suvietgame** (chapter) và **Tre Trăm Đốt** (campaign). Chọn pattern đúng repo đang sửa.
+
+## Bắt buộc
+
+1. **`subscribeLangChange` → `unsub` trong `destroy()`** — kể cả `LangToggle` (không chỉ scene shutdown).
+2. **Hai chiến lược lang:** màn tĩnh → `scene.restart(payload)`; đang chơi → `_refreshLang()` cascade — **không** restart giữa trận. GameOver restart kèm `skipSideEffects: true`.
+3. **Ba tầng string:** `t()` / `pickBilingual()` / `errorKey` + `messageKey` — logic không hardcode tiếng Việt.
+4. **`locale.js` an toàn Node** — guard `localStorage` + `document` (test script import module).
+5. **HTML modal** (suvietgame: `HistoryScrollOverlayView`; tretramdot: `StoryScrollOverlay` TODO): `lockPhaserInput` / `unlockPhaserInput`, đóng bằng `deferredAfterPointer`.
+6. **Demo/sim** (`BattleSim`, HowTo demos): dừng timer/tween + flag `alive` trước destroy; `refreshLang` destroy panel cũ trước rebuild.
+7. **Không shadow import i18n** — không `const t = scene.add.text` khi dùng `t('key')`.
+8. **Overlay scene ref** — null `howTo`, `leaderboard`, `storyOverlay`, `_historyOverlay` trong `onClose`.
+9. **Depth** — LangToggle phải cao hơn backdrop overlay (≥ depth + 10). Tre Trăm Đốt: story 45–48, toggle 55–62.
+10. **Subscribe một lần** — panel tự `unsub` HOẶC parent `refreshLang()`, không cả hai.
+11. **`add.dom` scroll** — `scrollEl.lang = getLang()`; giữ `scrollTop` on `refreshLang`; hằng số layout JS khớp CSS; font web cho VN (Noto Serif).
+
+## Smoke test sau thay đổi
+
+**suvietgame:** Hub VN/EN + HowTo reopen; ch.6 tank intro lang; victory → history → ĐÓNG (không restart); không leak listener.
+
+**Tre Trăm Đốt:** Login Truyện kể + VN/EN giữ scroll; in-game lang không reset run; GameOver không double-record; Leaderboard giữ tab; spam VN/EN — không `[i18n] lang listener failed`.
+
+Chạy `npm run build` (+ `npm run test:scoring` nếu có).
+
+## Git
+
+Không commit/push trừ khi user yêu cầu.

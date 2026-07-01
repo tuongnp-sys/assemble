@@ -1,0 +1,134 @@
+---
+description: GamePix SDK v3 playbook for new HTML5 portal games (MangoRus template)
+globs: platform/**,src/main.js,src/audio.js,src/game/engine.js,scripts/package-portal.mjs,docs/GAMEPIX*.md,packages/*gamepix*
+alwaysApply: false
+---
+
+# GamePix — new game integration (mandatory)
+
+Building a **new** HTML5 game (HTML + CSS + vanilla JS, Vite). Portal: **GamePix SDK v3** Testing Toolkit. Use **MangoRus as reference** — do not reinvent SDK integration.
+
+## Reference files (read first)
+
+| File | Role |
+|------|------|
+| `platform/gamepix.js` | All `GamePix.*` calls |
+| `platform/index.js`, `platform/bootstrap.js` | Detect + load SDK |
+| `src/main.js` | `enterSystemPause` / `exitSystemPause`, ads, hooks |
+| `src/game/engine.js` | `suspendLoop` / `resumeLoop` (cancel rAF on pause) |
+| `src/audio.js` | `pauseAudio()` — suspend AudioContext + HTML audio |
+| `scripts/package-portal.mjs` | Build, audio verify, ZIP |
+| `vite.config.js` | Inject `https://integration.gamepix.com/sdk/v3/gamepix.sdk.js` **before** bundle when `VITE_PLATFORM=gamepix` |
+| `docs/GAMEPIX_INTEGRATION.md` | SOP + checklist (create/update per game) |
+
+## Architecture
+
+1. **One adapter**: all GamePix API in `platform/gamepix.js`; game code uses `platform.*` only.
+2. **`base: './'`** — ZIP root has `index.html` + relative assets.
+3. **Build**: `npm run package:gamepix` → `packages/<game>-gamepix.zip`.
+4. Copy platform layer from MangoRus; change only gameplay, score/level, assets.
+
+## SDK v3 — must implement
+
+### Boot
+- `gameLoading(0–100)` → `gameLoaded()` **once** → unlock menu → `lang()`
+- No music before `gameLoaded` + user gesture
+- No `updateScore` / `updateLevel` before menu unlocked
+
+### Pause / resume (highest priority)
+- Chain `GamePix.on.pause` / `resume` / `soundOn` / `soundOff`
+- **Single pipeline**: `enterSystemPause` / `exitSystemPause` in `main.js`
+- `visibilitychange`: hidden → pause; visible → resume only if `PLAYING` and not `userPaused` / `adInProgress`
+- **No duplicate** `visibilitychange` listeners (avoid multiple `GAME_STOP`)
+- `gameplayStop()` / `gameAction()` with **`sdkGameplayActive` dedupe** — one stop per pause, one action per resume
+- Pause: input frozen, `pauseAudio()`, `suspendLoop()`, `gameStop` when playing
+- Resume: `resumeLoop()`, `resumeAudio()`, `gameAction` when playing
+- Debug: `?gpxdebug=1` → `[GamePix] pause/resume` logs
+
+### Score / level / ping
+- `updateScore(n)`: integer **n ≥ 1 only** — **never 0**
+- `updateLevel(n)`: integer **n ≥ 1 only**
+- `ping('game_over', …)`: **omit `score`** if 0
+- `happyMoment()` on milestones (optional)
+
+### Storage
+- `GamePix.localStorage` via `getCloudStorage()` — not `window.localStorage` on portal builds
+
+### Ads (v3 top-level)
+- `GamePix.interstitialAd()` — Promise (**not** `GamePix.game.interstitialAd`)
+- `GamePix.rewardAd()` — **not** `rewardedAd`
+- **First Start**: no interstitial
+- **Play Again only**: pause → `interstitialAd()` → resume → start
+- **Reward button** on game over: pause → `rewardAd()` → reward **after** promise resolves
+- `showAd` / `showRewardAd`: `dispatchPause` before, `dispatchResume` in `finally`
+
+### Audio / package
+- Bundle all audio in `public/assets/audio/` — no probe to missing files (403)
+- Verify audio in `dist/` before ZIP
+- Silent menu boot; music after gesture + start
+
+## Do not
+
+- Send `updateScore(0)` or `ping` with `score: 0`
+- `ping` on zone change (game over only)
+- Loop endless SDK fixes if console already shows: Open Tab → `GAME_STOP` → `GAME_ACTION` within seconds
+- Assume green sidebar = correct; red can be toolkit false negative
+
+## Testing SOP (before “done”)
+
+1. `npm run package:gamepix` — upload ZIP, Clear console, note build URL
+2. Start → play 15–30s **with audible music** (not menu / game over)
+3. Manual Pause / Resume → audio stops / starts
+4. **Open Tab** → silent → return within ~10s → music back
+5. Console: `GAME_STOP` then `GAME_ACTION` after Open Tab
+6. Die → **Play Again** (interstitial)
+7. Game over → **Watch Ad** (reward)
+8. iframe: `GamePix.interstitialAd().then(console.log)`
+
+## If toolkit red but logs correct
+
+- Document timeline in `docs/GAMEPIX_INTEGRATION.md`
+- Support email: build URL + screenshots + `GAME_STOP` / `GAME_ACTION` timestamps
+- Do not burn tokens on code without missing SDK event evidence
+
+## Deliverables
+
+- Game + platform adapter
+- Updated `docs/GAMEPIX_INTEGRATION.md`
+- `packages/<game>-gamepix.zip`
+- Short test report: checklist rows + console excerpt
+
+Match repo conventions. Minimize scope — focused diffs only.
+
+## Agent communication (token budget)
+
+**User-facing replies: English only. Short answers only.**
+
+### Reply format
+- Lead with outcome: Done / Blocked / Needs input.
+- Max ~8 bullets or ~12 lines prose unless user asks for detail.
+- No recap of the full playbook, no repeated SDK lecture, no long Vietnamese.
+- No engagement fluff ("Let me know if…", "Happy to help").
+- Code citations only when pointing at a specific fix; skip large file dumps.
+
+### While working (silent execution)
+- Read reference files before coding; do not narrate every file open.
+- Batch tool calls; avoid exploratory searches after context is clear.
+- Minimal diff — no drive-by refactors.
+- Do not re-explain GamePix checklist unless a row fails with new evidence.
+- If logs show `GAME_STOP` → `GAME_ACTION` after Open Tab: do not loop SDK fixes; document + stop.
+
+### When done, report only
+1. What changed (files, 1 line each)
+2. Build artifact path (e.g. `packages/*-gamepix.zip`)
+3. Test steps user must run (≤5 bullets)
+4. Blockers (if any), one line each
+
+### Ask user only when
+- Ambiguous game design choice
+- Missing asset / credential
+- Toolkit red **and** missing SDK events in console (not false negative)
+
+### Language
+- **All assistant messages: English.**
+- User may write Vietnamese; still reply in English, briefly.

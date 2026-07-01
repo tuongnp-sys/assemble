@@ -1,0 +1,109 @@
+{
+  "acts": {
+    "1": {
+      "labelKey": "act.1.label",
+      "timeSec": 75,
+      "collectTarget": 12,
+      "assembleTarget": 10,
+      "decoyRatio": 0.2,
+      "jointTypeCount": 4,
+      "allowRotate": false,
+      "saboteurEnabled": false
+    },
+    "2": {
+      "labelKey": "act.2.label",
+      "timeSec": 90,
+      "collectTarget": 25,
+      "assembleTarget": 20,
+      "decoyRatio": 0.28,
+      "jointTypeCount": 6,
+      "allowRotate": true,
+      "saboteurEnabled": false
+    },
+    "3": {
+      "labelKey": "act.3.label",
+      "timeSec": 100,
+      "collectTarget": 35,
+      "assembleTarget": 30,
+      "decoyRatio": 0.32,
+      "jointTypeCount": 8,
+      "allowRotate": true,
+      "saboteurEnabled": true
+    },
+    "finale": {
+      "labelKey": "act.finale.label",
+      "timeSec": 110,
+      "collectTarget": 50,
+      "assembleTarget": 40,
+      "decoyRatio": 0.35,
+      "jointTypeCount": 10,
+      "allowRotate": true,
+      "saboteurEnabled": true,
+      "cinematicAutoJoin": 60
+    }
+  },
+  "collect": {
+    "spawnIntervalSec": 0.85,
+    "driftSpeed": 140,
+    "laneY": 220,
+    "wrongTapPenaltySec": 3
+  },
+  "assemble": {
+    "snapTolerancePx": 12,
+    "columnX": 187,
+    "columnTopY": 140,
+    "segmentHeight": 28,
+    "poolY": 680,
+    "maxPoolVisible": 8,
+    "maxVisibleOnColumn": 7,
+    "viewportTopY": 118,
+    "viewportBottomY": 400
+  },
+  "timing": {
+    "assembleBonusSec": 30,
+    "assembleBonusPerSegment": 1.25,
+    "ritualBonusSec": 18,
+    "lowTimeWarningSec": 10
+  },
+  "ritual": {
+    "holdSec": 1.0,
+    "holdMinSec": 0.2,
+    "releaseEarlyIsFail": false
+  },
+  "butHelp": {
+    "enabledFromAct": "2",
+    "usesPerAct": { "2": 2, "3": 3, "finale": 3 },
+    "overlaySec": 2.8,
+    "pauseTimerDuringHint": true,
+    "lines": {
+      "2": {
+        "pool": ["Bụt: \"Tre già xoay lắm — lóng sáng khớp mắt đỉnh cột!\""],
+        "undo": ["Bụt: \"Gỡ lóng dưới cùng, con sẽ thấy lóng đúng!\""]
+      },
+      "3": {
+        "pool": ["Bụt: \"Đêm gió rồi — tin lóng ta chỉ, đừng vội!\""],
+        "undo": ["Bụt: \"Phú ông phá rồi — trả lóng cuối về kho!\""]
+      },
+      "finale": {
+        "pool": ["Bụt: \"Trăm đốt gần rồi — lóng vàng là chìa khóa!\""],
+        "undo": ["Bụt: \"Một lóng sai có thể hỏng cả trăm — gỡ lóng cuối!\""]
+      }
+    }
+  },
+  "items": {
+    "kinhThan": { "maxPerAct": 1 },
+    "dongHo": { "bonusSec": 10, "maxPerAct": 1 },
+    "vetBut": { "maxPerAct": 2 },
+    "butGhep": { "autoSnapCount": 3, "afterFailStreak": 2 }
+  },
+  "gold": { "perAct": [20, 50, 80, 100] },
+  "scoring": {
+    "actWeights": { "1": 1, "2": 2, "3": 3, "finale": 5 },
+    "basePerWeight": 10000,
+    "timeBonusMax": 5000,
+    "decoyPenalty": 200,
+    "saboteurBonusPerEvent": 100,
+    "saboteurBonusCap": 500,
+    "minScore": 100
+  }
+}

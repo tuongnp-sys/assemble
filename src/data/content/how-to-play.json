@@ -1,0 +1,48 @@
+{
+  "title": {
+    "vi": "Cách chơi",
+    "en": "How to Play"
+  },
+  "intro": {
+    "vi": "Ghép cây tre trăm đốt cho Phú ông. Mỗi màn có 3 bước: Gom tre → Ghép lóng → Khắc Nhập. Một đồng hồ chung cho cả màn.",
+    "en": "Assemble the hundred-joint bamboo for the Rich Man. Each act: Collect → Assemble → Carve In. One timer for the whole act."
+  },
+  "pages": [
+    {
+      "id": "collect",
+      "icon": "1",
+      "heading": { "vi": "Bước 1 — GOM TRE", "en": "Step 1 — COLLECT" },
+      "body": {
+        "vi": "Lóng tre trôi ngang trong vùng xanh.\n\n• Chạm lóng XANH LÁ (tre đúng) để gom vào kho.\n• KHÔNG chạm lóng NÂU ĐỎ (tre giả).\n• Chạm nhầm tre giả: mất 3 giây.\n• Gom đủ 10 lóng (Act 1) → sang bước ghép.\n\nMắt nối: chấm màu trên/dưới mỗi lóng — dùng ở bước sau.",
+        "en": "Bamboo segments drift across the green lane.\n\n• Tap GREEN segments (real bamboo).\n• Do NOT tap BROWN-RED decoys.\n• Wrong tap: −3 seconds.\n• Collect 10 segments (Act 1) → assemble phase.\n\nJoint dots on each segment matter in step 2."
+      }
+    },
+    {
+      "id": "assemble",
+      "icon": "2",
+      "heading": { "vi": "Bước 2 — GHÉP LÓNG", "en": "Step 2 — ASSEMBLE" },
+      "body": {
+        "vi": "Kho lóng ở dưới, cột ghép ở giữa.\n\n• CHẠM lóng → chọn (viền sáng).\n• CHẠM ô vàng trên cột → ghép.\n• Chấm DƯỚI lóng trên = chấm TRÊN lóng dưới (màu giống nhau).\n• Lóng đầu: chấm trên xám · lóng cuối: chấm dưới xám.\n• Ghép đủ → Khắc Nhập.",
+        "en": "Pool at bottom, column in center.\n\n• TAP a segment in the pool to select (gold border).\n• TAP the yellow zone on the column to place.\n• Bottom dot of upper = top dot of lower.\n• Fill the column → ritual button appears.\n\nAct 2+: rotation. Act 3+: sabotage!"
+      }
+    },
+    {
+      "id": "ritual",
+      "icon": "3",
+      "heading": { "vi": "Bước 3 — KHẮC NHẬP", "en": "Step 3 — CARVE IN" },
+      "body": {
+        "vi": "Nút đỏ KHẮC NHẬP xuất hiện khi ghép xong.\n\n• GIỮ nút khoảng 1 giây — tự hoàn tất khi đủ.\n• Hoặc THẢ ngón sau khi thanh đầy.\n• Đúng toàn bộ chuỗi → thắng act!\n\nThả quá sớm → \"Giữ thêm một chút…\"",
+        "en": "The red CARVE IN button appears when the column is full.\n\n• HOLD ~1 second — auto-completes when full.\n• Or RELEASE after the bar fills.\n• Correct chain → you win the act!\n\nRelease too early → \"Hold a bit longer…\""
+      }
+    },
+    {
+      "id": "fail",
+      "icon": "!",
+      "heading": { "vi": "KHẮC XUẤT — Thua", "en": "CARVE OUT — Defeat" },
+      "body": {
+        "vi": "Sai MỘT mắt nối khi Khắc Nhập → cả cây sụp (Khắc Xuất).\n\n• Hết giờ cũng thua.\n• Màn thua chỉ rõ lóng nào mắt không khớp.\n• Act 3+: Phú ông có thể ném lóng giả vào kho.\n\nMẹo: nhìn chấm màu ở mép lóng, ghép từ đáy lên.",
+        "en": "One wrong joint at ritual → whole stack falls (Carve Out).\n\n• Running out of time (75s Act 1) also loses.\n• Defeat screen shows which slot was wrong.\n• Act 1: 10 segments · 75 seconds.\n\nTip: collect fast, stack in order, don't rush the ritual."
+      }
+    }
+  ]
+}

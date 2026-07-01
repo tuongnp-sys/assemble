@@ -1,0 +1,56 @@
+{
+  "acts": {
+    "1": {
+      "title": { "vi": "Rừng non", "en": "Young Bamboo" },
+      "briefing": {
+        "vi": "Bụt: \"Con hãy gom tre, ghép đúng mắt nối, rồi khắc nhập. Phú ông đang theo dõi…\"",
+        "en": "Fairy: \"Gather bamboo, match joints, carve in. The Rich Man watches…\""
+      },
+      "victory": {
+        "vi": "Bụt: \"Giỏi lắm! Mười lóng khớp. +20 vàng — chưa đủ trăm đốt.\"",
+        "en": "Fairy: \"Ten joints fit. +20 gold — not yet a hundred.\""
+      }
+    },
+    "2": {
+      "title": { "vi": "Tre già", "en": "Old Bamboo" },
+      "briefing": {
+        "vi": "Bụt: \"Tre già có thể xoay ngược. Quan sát kỹ mắt nối!\"",
+        "en": "Fairy: \"Old bamboo may hide joints. Look closely!\""
+      },
+      "victory": {
+        "vi": "Phú ông: \"Hừm… hai mươi lóng? Ta sẽ làm khó con hơn!\"",
+        "en": "Rich Man: \"Twenty joints? I'll make it harder!\""
+      }
+    },
+    "3": {
+      "title": { "vi": "Đêm gió", "en": "Windy Night" },
+      "briefing": {
+        "vi": "Bụt: \"Đêm gió. Phú ông sẽ phá — bình tĩnh ghép lại!\"",
+        "en": "Fairy: \"Windy night. The Rich Man interferes — stay calm!\""
+      },
+      "victory": {
+        "vi": "Bụt: \"Ba mươi lóng! Còn một lần — trăm đốt!\"",
+        "en": "Fairy: \"Thirty joints! One trial left — the hundred!\""
+      }
+    },
+    "finale": {
+      "title": { "vi": "Trăm đốt", "en": "Hundred Joints" },
+      "briefing": {
+        "vi": "Phú ông: \"Ai ghép trăm đốt thì ta gả con!\" Bụt: \"Con làm được!\"",
+        "en": "Rich Man: \"Join a hundred — marry my daughter!\" Fairy: \"You can!\""
+      },
+      "victory": {
+        "vi": "Khắc nhập! Cây tre dựng thẳng. Phú ông: \"Không thể nào!\"",
+        "en": "Carve in! The bamboo rises. Rich Man: \"Impossible!\""
+      },
+      "finale": {
+        "vi": "Thiếu thư bước ra. Dân làng chúc mừng.\n👑 TRE MASTER",
+        "en": "The bride appears. The village cheers.\n👑 BAMBOO MASTER"
+      }
+    }
+  },
+  "defeat": {
+    "vi": "Bụt: \"Con hãy cố gắng kiên nhẫn. Thử lại — khắc nhập cần bình tĩnh.\"",
+    "en": "Fairy: \"Don't rush. Try again.\""
+  }
+}
